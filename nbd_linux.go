@@ -220,3 +220,17 @@ func (s *NBDServer) Stop() error {
 	err := s.nbdFile.Close()
 	return err
 }
+
+// DisconnectNBD disconnects and clears a kernel NBD device that may have been
+// left behind by an earlier process.
+func DisconnectNBD(path string) error {
+	nbd, err := os.OpenFile(path, os.O_RDWR, 0)
+	if err != nil {
+		return fmt.Errorf("open %s: %w", path, err)
+	}
+	defer nbd.Close()
+	_ = ioctlSetInt(nbd, nbdDisconnect, 0)
+	_ = ioctlSetInt(nbd, nbdClearQueue, 0)
+	_ = ioctlSetInt(nbd, nbdClearSock, 0)
+	return nil
+}
