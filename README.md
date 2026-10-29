@@ -10,3 +10,7 @@ parity disk.
 This module contains the portable layout validator, parity engine, Galois-field
 math, and Linux NBD transport. SmoothNAS owns the appliance-specific control
 plane, DB rows, API handlers, and mount orchestration.
+
+## License
+
+nonraid is licensed under the [AGPL-3.0](LICENSE).
